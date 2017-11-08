@@ -4,8 +4,6 @@ export USER=justin
 export PROJECT=tensorflow2
 export IMAGE_NAMESPACE=$PROJECT
 export IMAGE=tfchatbot
-export REGISTRY_HOST=docker-registry-default.apps.${IP}.xip.io
-export REGISTRY_HOST=172.30.1.1:5000
 
 oc login ${IP}:8443 -u system:admin
 oc adm policy add-cluster-role-to-user cluster-admin $USER
