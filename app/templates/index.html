@@ -1,0 +1,14 @@
+{% block content %}
+<h1>Chat</h1>
+    {% for sentence in conversation %}
+    <div><p>{{ sentence }}</b></p></div>
+    {% endfor %}
+<form action="" method="post" name="index">
+    {{ form.hidden_tag() }}
+    <p>
+        Ask me a question<br>
+        {{ form.query(size=80) }}
+    </p>
+    <p><input type="submit" value="Chat !"></p>
+</form>
+{% endblock %}

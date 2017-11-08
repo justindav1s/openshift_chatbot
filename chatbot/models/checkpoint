@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/u760245/github/ML/chatbot/models/airline_chatbot_model.tflearn"
+all_model_checkpoint_paths: "/Users/u760245/github/ML/chatbot/models/airline_chatbot_model.tflearn"
