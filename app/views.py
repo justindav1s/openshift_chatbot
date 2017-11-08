@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect
 from app import app
 from .forms import ChatForm
+from .model import Exchange
 
 conversation = []
 
@@ -24,20 +25,17 @@ net = tflearn.regression(net)
 model = tflearn.DNN(net)
 model.load('chatbot/models/airline_chatbot_model.tflearn')
 
-# cb_utils.predictThis(model, 'are you open')
-# cb_utils.predictThis(model, 'you open')
-# cb_utils.predictThis(model, 'when do you open')
-# cb_utils.predictThis(model, 'what time do you open')
-# cb_utils.predictThis(model, 'what can I hire from you')
-
+botname = 'Lissa'
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = ChatForm()
     if form.validate_on_submit():
         flash('Query=%s' %(form.query.data))
-        conversation.append(form.query.data)
+        ex = Exchange('You', form.query.data)
+        conversation.append(ex)
         response = cb_utils.predictThis(model, form.query.data)
-        conversation.append(response)
+        ex = Exchange(botname, response)
+        conversation.append(ex)
         return redirect('/')
     return render_template("index.html",
                            title='Chat',

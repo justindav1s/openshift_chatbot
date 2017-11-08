@@ -1,7 +1,7 @@
 {% block content %}
-<h1>Chat</h1>
-    {% for sentence in conversation %}
-    <div><p>{{ sentence }}</b></p></div>
+<h1>Airline Chat</h1>
+    {% for ex in conversation %}
+<div><p><b>{{ex.who }}</b> : {{ ex.sentence }}</b></p></div>
     {% endfor %}
 <form action="" method="post" name="index">
     {{ form.hidden_tag() }}

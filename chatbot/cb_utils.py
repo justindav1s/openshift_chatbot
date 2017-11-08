@@ -1,5 +1,5 @@
 import csv
-import pickle
+import json
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
@@ -7,6 +7,14 @@ import operator
 
 ignore_words = ['?']
 nn_width = 20
+
+tags = {}
+
+with open('chatbot/flights.json') as json_data:
+    intents = json.load(json_data)
+    dict = intents['intents']
+    for item in dict:
+        tags[item['tag']] = item['responses']
 
 def saveToCSV(list, filename):
     with open(filename, 'w') as file:
@@ -49,6 +57,7 @@ def zeroList(length):
     return zeros
 
 def predictThis(model, sentence):
+    response = ""
     classes = loadFromFile('chatbot/classes.csv')
     bag = convertToBag(sentence)
     bags = []
@@ -56,6 +65,15 @@ def predictThis(model, sentence):
     preds = model.predict(bags)
     for i in range(len(preds)):
         index, value = max(enumerate(preds[i]), key=operator.itemgetter(1))
+        accuracy = value*100
         print(sentence, ' : ', classes[index] , ' : ', (value*100), '%')
+        tag = classes[index]
 
-    return classes[index], int(value)
+        accuracy
+        if (accuracy < 50):
+            response = "I don't understand, can you rephrase your question ?"
+        else:
+            responses = tags[tag]
+            response = responses[0]
+
+    return response
